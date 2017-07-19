@@ -24,5 +24,5 @@ Finally, I found [Manybooks](http://manybooks.net/).
 This site contains books from "Project Gutenberg" and other internet archives.
 Most importantly, it has no regulations on web scraping (or I just too blind to read.)
 
-#### Code Development Records
+### Development Records
 - 2017/07/19 - start building the web scraper  
