@@ -46,4 +46,3 @@ python /web_scraping/novel_scraper.py
 - Text generation
 
 ### Known Issues
-- Web scraper issue #1: this scraper always starts at the first page of specific genre. It cannot continue the unfinished task.
