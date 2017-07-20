@@ -165,7 +165,7 @@ def download_single_book(url, book_link, file_dir, book_name):
     # Text file download link
     book_id = book_link[8:-5]
     download_page = 'http://' + url + '/download-ebook?tid=' + book_id + \
-    '&book=1%3Atext%3A.txt%3Atext'
+    '&book=1%3Aepub%3A.epub%3Aepub'
     
     # Access the download page
     print('-> access... %s' %(book_name))
@@ -178,11 +178,11 @@ def download_single_book(url, book_link, file_dir, book_name):
     
     # Get downloadable elements
     download_elems = soup.select('a[rel="nofollow"]')
-    txt_link = [elem.get('href') for elem in download_elems if \
-                elem.get('href').endswith('.txt')][0]
+    epub_link = [elem.get('href') for elem in download_elems if \
+                elem.get('href').endswith('.epub')][0]
     
-    # Download .txt file
-    download_link = 'http://%s%s' %(url, txt_link)
+    # Download .epub file
+    download_link = 'http://%s%s' %(url, epub_link)
     print('->-> access download link... %s' %(download_link))
     res = requests.get(download_link, allow_redirects=True)  # redirected!  
     try:
@@ -206,9 +206,9 @@ def download_single_book(url, book_link, file_dir, book_name):
     book_name = book_name.replace('\'', '')
     book_name = book_name.replace(',', '')
     
-    # Write .txt file
+    # Write .epub file
     cachesize = 1024
-    with open('%s/%s.txt' %(file_dir, book_name), 'wb') as write_file:
+    with open('%s/%s.epub' %(file_dir, book_name), 'wb') as write_file:
         for chunk in res.iter_content(cachesize):
             if len(chunk) % cachesize != 0:
                 chunk += b' ' * ( cachesize - len(chunk))
@@ -258,8 +258,8 @@ if __name__ == '__main__':
     
     # Settings
     
-    # The path to save .txt files
-    file_dir = os.path.join(os.path.dirname(__file__),'txt')
+    # The path to save .epub files
+    file_dir = os.path.join(os.path.dirname(__file__),'epub')
     # The "Manybooks" website
     url = 'manybooks.net'    
     # Last unfinished download item (book name)
@@ -289,7 +289,7 @@ if __name__ == '__main__':
         
         try:
             if last_item == None:
-                # Find books and download .txt files
+                # Find books and download .epub files
                 download_books_in_page(url, soup, file_dir)
             else:
                 # Search for the last unfinished download item
