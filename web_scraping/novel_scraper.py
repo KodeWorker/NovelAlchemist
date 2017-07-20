@@ -1,3 +1,10 @@
+""" Novel Scraper
+# Description:
+    This program scraps the novels on "Manybooks.net" with selected genre cata-
+    gory and language option.
+# Author: Shin-Fu (Kelvin) Wu
+# Date: 2017/07/20
+"""
 import os
 import time
 import random
