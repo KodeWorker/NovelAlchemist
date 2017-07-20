@@ -26,10 +26,8 @@ This site contains books from "Project Gutenberg" and other internet archives.
 Most importantly, it has no regulations on web scraping (or I just too blind to read.)
 
 #### Details
-Dependencies: `requests` and `bs4`
-
-Run the scraper:
-
+- Dependencies: `requests` and `bs4`
+- Run the scraper:
 The default selection is "English Sci-fi Novels".
 If you want to scrap different genre or language, set the function (`sel_genre` and `sel_language`) parameter `select=None`.
 ```
