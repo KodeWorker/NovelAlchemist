@@ -262,7 +262,7 @@ if __name__ == '__main__':
     file_dir = os.path.join(os.path.dirname(__file__),'txt')
     # The "Manybooks" website
     url = 'manybooks.net'    
-    # Last unfinished download item
+    # Last unfinished download item (book name)
     last_item = None
     
     # Create the folder to save scraped files
