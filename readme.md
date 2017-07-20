@@ -29,4 +29,8 @@ Most importantly, it has no regulations on web scraping (or I just too blind to 
 - 2017/07/20 - complete the web scraper
 
 ### To Do List
-- Text file regularization
+- Text regularization
+- Text generation
+
+### Known Issues
+- Web scraper issue #1: this scraper always starts at the first page of specific genre. It cannot continue the unfinished task.
