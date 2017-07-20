@@ -25,4 +25,8 @@ This site contains books from "Project Gutenberg" and other internet archives.
 Most importantly, it has no regulations on web scraping (or I just too blind to read.)
 
 ### Development Records
-- 2017/07/19 - start building the web scraper  
+- 2017/07/19 - start building the web scraper
+- 2017/07/20 - complete the web scraper
+
+### To Do List
+- Text file regularization
