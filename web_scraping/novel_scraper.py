@@ -217,11 +217,53 @@ def download_single_book(url, book_link, file_dir, book_name):
     # Employ random delay
     time.sleep(3+random.randint(0,5))
 ###############################################################################
+def continue_from_last_item(url, soup, file_dir, last_item):
+    """Continue from Last Item
+    This function finds the page of the last unfinish item, and downloads all 
+    the remaining items.
+    
+    Parameters
+    ----------
+    url: string
+        The root URL address.
+    soup: bs4.BeautifulSoup object
+        The object contains all the info. in the genre catagory page.
+    file_dir: sting
+        This is the folder to save the scraped files. 
+    last_item: string
+        The book name of the last unfinished download item.
+    """
+    try:
+        # Has books
+        # Get book elements in the genre page
+        book_elems = soup.select('.grid_6.smallBook a')
+        book_links =  [elem.get('href') for elem in book_elems]
+        book_names = [elem.getText() for elem in book_elems]
+        if last_item not in book_names:
+            # Skip the page
+            pass
+        else:            
+            book_links = book_links[book_names.index(last_item):]
+            book_names = book_names[book_names.index(last_item):]
+            for i in range(len(book_links)):
+                # Download one book at a time
+                download_single_book(url, book_links[i], file_dir, book_names[i])
+            last_item = None
+    except:
+        # No book
+        raise ScraperError('Error: No books in this page!')
+    return last_item
+###############################################################################
 if __name__ == '__main__':
     
     # Settings
+    
+    # The path to save .txt files
     file_dir = os.path.join(os.path.dirname(__file__),'txt')
-    url = 'manybooks.net'
+    # The "Manybooks" website
+    url = 'manybooks.net'    
+    # Last unfinished download item
+    last_item = None
     
     # Create the folder to save scraped files
     if not os.path.exists(file_dir):
@@ -246,8 +288,12 @@ if __name__ == '__main__':
         soup = bs4.BeautifulSoup(res.text)
         
         try:
-            # Find books and download .txt files
-            download_books_in_page(url, soup, file_dir)
+            if last_item == None:
+                # Find books and download .txt files
+                download_books_in_page(url, soup, file_dir)
+            else:
+                # Search for the last unfinished download item
+                last_item = continue_from_last_item(url, soup, file_dir, last_item)
             
             # Get "next page" button
             button_elems = soup.select('a[title="next"]')[0]        
