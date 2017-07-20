@@ -5,6 +5,7 @@ The goal of this project is to generate a novel that can fool human readers.
 This project contains three major parts:
 
 1. Web scraping - scap free or public domain books with given genre
+2. Text regularization - get the regular content from scraped text
 2. Text generaton - use LSTM to generate sentences
 3. GAN novel generation - use GAN to build a novel generator
 
