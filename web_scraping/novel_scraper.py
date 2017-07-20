@@ -212,7 +212,10 @@ def download_single_book(url, book_link, file_dir, book_name):
         for chunk in res.iter_content(cachesize):
             if len(chunk) % cachesize != 0:
                 chunk += b' ' * ( cachesize - len(chunk))
-            write_file.write(chunk)    
+            write_file.write(chunk)
+    
+    # Employ random delay
+    time.sleep(3+random.randint(0,5))
 ###############################################################################
 if __name__ == '__main__':
     
@@ -243,15 +246,12 @@ if __name__ == '__main__':
         soup = bs4.BeautifulSoup(res.text)
         
         try:
-            # Get "next page" button
-            button_elems = soup.select('a[title="next"]')[0]        
-            page_link = 'http://%s%s' %(url, button_elems.get('href')) 
-            
             # Find books and download .txt files
             download_books_in_page(url, soup, file_dir)
             
-            # Employ random delay
-            time.sleep(5+random.randint(2,10))
+            # Get "next page" button
+            button_elems = soup.select('a[title="next"]')[0]        
+            page_link = 'http://%s%s' %(url, button_elems.get('href')) 
         except Exception as e:
             # No "next page" button
             print(e)
