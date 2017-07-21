@@ -6,9 +6,15 @@
 # Date: 2017/07/21
 """
 import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), 'ebooklib'))
+from ebooklib import epub
+
 
 def convert_epub_to_txt(epub_path, txt_path):
-    pass
+    book = epub.read_epub(epub_path)
+    print(book)
 
 if __name__ == '__main__':
     
