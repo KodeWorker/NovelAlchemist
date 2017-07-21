@@ -2,7 +2,7 @@
 
 This project is for NaNoGenMo 2017.
 The goal of this project is to generate a novel that can fool human readers.
-This project contains three major parts:
+This project contains four major parts:
 
 1. Web scraping - scap free or public domain books with given genre
 2. Text regularization - get the regular content from scraped text
@@ -40,9 +40,10 @@ python /web_scraping/novel_scraper.py
 ### Development Records
 - 2017/07/19 - start building the web scraper
 - 2017/07/20 - complete the web scraper
+- 2017/07/21 - start building the text regularization
 
 ### To Do List
-- Text regularization
 - Text generation
+- GAN novel generation
 
 ### Known Issues

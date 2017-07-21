@@ -263,14 +263,13 @@ def continue_from_last_item(url, soup, file_dir, last_item):
 ###############################################################################
 if __name__ == '__main__':
     
-    # Settings
-    
+    # Settings    
     # The path to save .epub files
     file_dir = os.path.join(os.path.dirname(__file__),'epub')
     # The "Manybooks" website
     url = 'manybooks.net'    
     # Last unfinished download item (book name)
-    last_item = None
+    last_item = "Fiddler"
     
     # Create the folder to save scraped files
     if not os.path.exists(file_dir):
