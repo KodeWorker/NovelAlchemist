@@ -1,0 +1,3 @@
+[submodule "text_regularization/ebooklib"]
+	path = text_regularization/ebooklib
+	url = https://github.com/aerkalov/ebooklib
