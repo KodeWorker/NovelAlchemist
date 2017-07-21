@@ -8,6 +8,7 @@
 import os
 import time
 import random
+import shutil
 import bs4
 import requests
 
@@ -64,6 +65,7 @@ def sel_genre(url='manybooks.net', select=None):
     
     link = genre_dict[genre_list[int(select)-1]]
     return link
+
 ###############################################################################
 def sel_language(url, select=None):
     """ Select Language
@@ -115,6 +117,7 @@ def sel_language(url, select=None):
     
     print('language: %s' %lang_list[int(select)-1])
     return lang_dict[lang_list[int(select)- 1]]
+
 ###############################################################################
 def download_books_in_page(url, soup, file_dir):
     """Download Books in the Genre Pages
@@ -142,6 +145,7 @@ def download_books_in_page(url, soup, file_dir):
     except:
         # no book
         raise ScraperError('Error: No books in this page!')
+        
 ###############################################################################
 class ScraperError(Exception):
     """ Scraper Error
@@ -151,6 +155,7 @@ class ScraperError(Exception):
         self.value = value
     def __str__(self):
         return repr(self.value)
+    
 ###############################################################################
 def download_single_book(url, book_link, file_dir, book_name):
     """Download a single Book
@@ -215,7 +220,13 @@ def download_single_book(url, book_link, file_dir, book_name):
     
     # Write .epub file
     cachesize = 1024
-    with open('%s/%s.epub' %(file_dir, book_name), 'wb') as write_file:
+    
+    # Check if the file exits
+    save_path = '%s/%s.epub' %(file_dir, book_name)
+    if os.path.exists(save_path):
+        save_path.replace('.epub', '-dup.epub')
+        
+    with open(save_path, 'wb') as write_file:
         for chunk in res.iter_content(cachesize):
             if len(chunk) % cachesize != 0:
                 chunk += b' ' * ( cachesize - len(chunk))
@@ -223,6 +234,7 @@ def download_single_book(url, book_link, file_dir, book_name):
     
     # Employ random delay
     time.sleep(3+random.randint(0,5))
+    
 ###############################################################################
 def continue_from_last_item(url, soup, file_dir, last_item):
     """Continue from Last Item
@@ -260,17 +272,22 @@ def continue_from_last_item(url, soup, file_dir, last_item):
         # No book
         raise ScraperError('Error: No books in this page!')
     return last_item
+
 ###############################################################################
 if __name__ == '__main__':
     
     # Settings    
     # The path to save .epub files
-    file_dir = os.path.join(os.path.dirname(__file__),'epub')
+    file_dir = os.path.join(os.path.dirname(__file__), 'epub')
     # The "Manybooks" website
     url = 'manybooks.net'    
     # Last unfinished download item (book name)
-    last_item = "Fiddler"
-    
+    last_item = None
+        
+    # Clear the folder if restart the scraper (last_item = None)
+    if last_item == None and os.path.exists(file_dir):
+        shutil.rmtree(file_dir)
+        
     # Create the folder to save scraped files
     if not os.path.exists(file_dir):
         os.makedirs(file_dir)

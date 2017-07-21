@@ -9,6 +9,17 @@ This project contains four major parts:
 2. Text generaton - use LSTM to generate sentences
 3. GAN novel generation - use GAN to build a novel generator
 
+### Dependencies
+- [BeautifulSoup](http://docs.python-requests.org/en/master/) `bs4`
+- [Requests](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) `requests`
+- [ebooklib](https://github.com/KodeWorker/ebooklib) `ebooklib` (forked and modified from [ebooklib](https://github.com/aerkalov/ebooklib))
+- [Matplotlib](https://matplotlib.org/) `matplotlib`
+
+Clone this project and submodules
+```
+git clone --recursive https://github.com/KodeWorker/NovelAlchemist.git
+```
+
 ### Web scrapping
 
 #### Source
@@ -26,9 +37,8 @@ This site contains books from "Project Gutenberg" and other internet archives.
 Most importantly, it has no regulations on web scraping (or I just too blind to read.)
 
 #### Details
-- Dependencies: `requests` and `bs4`
 - Run the scraper:
-The default selection is "English Sci-fi Novels".
+The default selection is "English Sci-Fi Novels".
 If you want to scrap different genre or language, set the function (`sel_genre` and `sel_language`) parameter `select=None`.
 ```
 python /web_scraping/novel_scraper.py
