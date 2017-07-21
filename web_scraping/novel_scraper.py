@@ -223,8 +223,8 @@ def download_single_book(url, book_link, file_dir, book_name):
     
     # Check if the file exits
     save_path = '%s/%s.epub' %(file_dir, book_name)
-    if os.path.exists(save_path):
-        save_path.replace('.epub', '-dup.epub')
+    while os.path.exists(save_path):
+        save_path = save_path.replace('.epub', '-dup.epub')
         
     with open(save_path, 'wb') as write_file:
         for chunk in res.iter_content(cachesize):

@@ -2,6 +2,7 @@
 
 This project is for NaNoGenMo 2017.
 The goal of this project is to generate a novel that can fool human readers.
+The project progress can be checked on the development [blog](https://kodeworker.github.io/%E8%A8%88%E7%95%AB/%E7%A7%91%E5%B9%BB%E5%B0%8F%E8%AA%AA%E9%8D%8A%E6%88%90%E8%A8%88%E7%95%AB/) (It's in traditional Chinese :D).
 This project contains four major parts:
 
 1. Web scraping - scap free or public domain books with given genre
