@@ -6,7 +6,6 @@
 # Date: 2017/07/21
 """
 import os
-import re
 import sys
 import bs4
 
@@ -44,7 +43,6 @@ def convert_epub_to_txt(epub_path, txt_path, encode='utf-8'):
         # Select the text part
         soup = bs4.BeautifulSoup(content)
         elems = soup.findAll(['h1', 'h2', 'h3', 'h4', 'p', 'pre'])
-        # elems = soup.findAll(class_=re.compile("^calibre")) # - Not general enough
         lines = [(elem.getText() + '\n') for elem in elems]
     except Exception as e:
         # BadZipFile -> parse an empty .txt file
