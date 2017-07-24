@@ -44,25 +44,24 @@ def extract_metadata(txt_dir, ext_dir, result_dir, purge=False):
         with open(file_path, 'r') as read_file:
             lines = read_file.readlines()
             meta = ''.join(lines[:20])
-#            tail_flag = True
             if 'project gutenberg' in meta.lower():
                 # Process Type 1 Metadata
                 extract_type_1(lines, txt_ext_dir)
-#                tail_flag = False
             else:
-#                meta = ''.join(lines[:20])
-#                for special_text in special_texts:
-#                    if special_text in meta.lower():
-#                        # Process Type 2 Metadata
-#                        extract_type_2(lines, txt_ext_dir)
-#                        tail_flag = False
-#                        break
-#            if tail_flag:
-#                # Process Type 3 Metadata
-#                extract_type_3(lines, txt_ext_dir)
+                # Process Type 2 Metadata
                 extract_type_2
 ###############################################################################
 def extract_type_1(lines, txt_ext_dir):
+    """Extract Type 1
+    Extract the text files from Project Gutenberg or text with similar styles.
+    
+    Parameters
+    ----------
+    lines: lists of strings
+        This is the text file stored in the list line-by-line.
+    txt_ext_dir: string
+        This is the directory to save the content and metadata.    
+    """
 
     content_init_idx = 0
     content_end_idx = len(lines) - 1
@@ -160,6 +159,16 @@ def extract_type_1(lines, txt_ext_dir):
     
 ###############################################################################
 def extract_type_2(lines, txt_ext_dir):
+    """Extract Type 2
+    Extract the text files with styles much different from Project Gutenberg.
+    
+    Parameters
+    ----------
+    lines: lists of strings
+        This is the text file stored in the list line-by-line.
+    txt_ext_dir: string
+        This is the directory to save the content and metadata.    
+    """
     content_init_idx = 0
     content_end_idx = len(lines) - 1    
     
@@ -238,9 +247,6 @@ def extract_type_2(lines, txt_ext_dir):
         write_file.writelines(content)
     with open(os.path.join(txt_ext_dir, 'metadata.txt'), 'w') as write_file:
         write_file.writelines(metadata)
-###############################################################################
-#def extract_type_3(lines, txt_ext_dir):
-#    extract_type_2(lines, txt_ext_dir)
 ###############################################################################
 if __name__ == '__main__':
     
