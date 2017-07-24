@@ -42,7 +42,7 @@ Most importantly, it has no regulations on web scraping (or I just too blind to 
 The default selection is "English Sci-Fi Novels".
 If you want to scrap different genre or language, set the function (`sel_genre` and `sel_language`) parameter `select=None`.
 ```
-python /web_scraping/novel_scraper.py
+python ./web_scraping/novel_scraper.py
 ```
 
 ### Text Regularization

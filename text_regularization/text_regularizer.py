@@ -1,6 +1,6 @@
 import os
 from epub_converter import convert_epub_to_txt
-from text_analyzer import analyze_parsed_text
+from text_analyzer import analyze_parsed_text, analyze_metadata_type
 ###############################################################################
 if __name__ == '__main__':
     
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     # Convert .epub to .txt
     epub_files = [x[2] for x in os.walk(epub_dir)][0]
     for i in range(len(epub_files)):
-        print('\rprogress... %d / %d' %(i+1, len(epub_files)), end='\r')
+        print('\rprogress: %d / %d' %(i+1, len(epub_files)), end='\r')
         epub_path = os.path.join(epub_dir, epub_files[i])
         txt_path = os.path.join(txt_dir, \
                                 epub_files[i].replace('.epub', '.txt'))
@@ -37,3 +37,10 @@ if __name__ == '__main__':
     print('-- Parsed Files Analyzed --')
     
     # Remove abnormal files
+    for file in anomalies_name:
+        os.remove(os.path.join(txt_dir, file))
+    print('-- Abnormal Files Removed --')
+    
+    # Analyze the metadata type of parsed .txt files
+    analyze_metadata_type(txt_dir, result_dir)
+    print('-- File Metadata Analyzed --')
