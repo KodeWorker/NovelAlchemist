@@ -8,7 +8,7 @@
 import os
 import shutil
 ###############################################################################
-def extract_metadata(txt_dir, ext_dir, result_dir, purge=False):
+def extract_metadata(txt_dir, txt_file, ext_dir):
     """Extract Metadata
     This function categorize the metadata and extract the metadata and content
     corespondingly.
@@ -17,39 +17,28 @@ def extract_metadata(txt_dir, ext_dir, result_dir, purge=False):
     ----------
     txt_dir: string
         This is the directory of the parsed .txt files.
+    txt_file: string
+        This is the file name of the parsed .txt files.
     ext_dir: string
         This is the directory of the extracted files.
-    result_dir: string
-        This is the directory to save the results of analyzed results.    
     """
     
-    # Settings
-#    special_texts = ['author', 'title', 'license', 'acknowledgements']
-    
-    # Create the extracted dir
-    if purge:
-        shutil.rmtree(ext_dir)
-        os.makedirs(ext_dir)    
-    
     # Read parsed .txt files
-    txt_files = [x[2] for x in os.walk(txt_dir)][0]
-    for i in range(len(txt_files)):
-        print('\rprogress: %d / %d' %(i + 1, len(txt_files)), end='\r')
-        file_path = os.path.join(txt_dir, txt_files[i])
-        txt_ext_dir = os.path.join(ext_dir, txt_files[i].replace('.txt', '').replace('.', ''))        
-        
-        if not os.path.exists(txt_ext_dir):
-            os.makedirs(txt_ext_dir)
-        
-        with open(file_path, 'r') as read_file:
-            lines = read_file.readlines()
-            meta = ''.join(lines[:20])
-            if 'project gutenberg' in meta.lower():
-                # Process Type 1 Metadata
-                extract_type_1(lines, txt_ext_dir)
-            else:
-                # Process Type 2 Metadata
-                extract_type_2
+    txt_ext_dir = os.path.join(ext_dir, \
+                  txt_file.replace('.txt', '').replace('.', ''))        
+    
+    if not os.path.exists(txt_ext_dir):
+        os.makedirs(txt_ext_dir)
+    
+    with open(os.path.join(txt_dir, txt_file), 'r') as read_file:
+        lines = read_file.readlines()
+        meta = ''.join(lines[:20])
+        if 'project gutenberg' in meta.lower():
+            # Process Type 1 Metadata
+            extract_type_1(lines, txt_ext_dir)
+        else:
+            # Process Type 2 Metadata
+            extract_type_2
 ###############################################################################
 def extract_type_1(lines, txt_ext_dir):
     """Extract Type 1
@@ -255,14 +244,19 @@ if __name__ == '__main__':
     txt_dir = os.path.join(os.path.dirname(__file__), 'txt')
     # The directory of the extracted files 
     ext_dir = os.path.join(os.path.dirname(__file__), 'ext')
-    # The directory to save the analyzed results
-    result_dir = os.path.join(os.path.dirname(__file__), 'results')
+    # Should purge the extracted dir
+    purge = False
     
     # Create the folfer to save extracted metadata and content
     if not os.path.exists(ext_dir):
         os.makedirs(ext_dir)
-    # Create the folder to save analyzed results
-    if not os.path.exists(result_dir):
-        os.makedirs(result_dir)
+    # Create the extracted dir
+    if purge:
+        shutil.rmtree(ext_dir)
+        os.makedirs(ext_dir) 
     
-    extract_metadata(txt_dir, ext_dir, result_dir, purge=True)
+    # Categorize the metadata and extract the metadata and content
+    txt_files = [x[2] for x in os.walk(txt_dir)][0]
+    for i in range(len(txt_files)):
+        print('\rprogress: %d / %d' %(i + 1, len(txt_files)), end='\r')
+        extract_metadata(txt_dir, txt_files[i], ext_dir)
